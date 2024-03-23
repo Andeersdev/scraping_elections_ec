@@ -1,0 +1,27 @@
+Revisar la version del navegador google chrome, dependiendo de esa version que poseas, debes descargar el driver de chrome
+correspondiente a la version de tu navegador.
+Ahora para que funcione necesitas instalar selenium, igual lo pongo en requirements.txt
+Para arrancar el navegador y el proceso automatizado, el driver de chrome debe estar funcionando.
+Tienes opciones:
+1. Instalarlo en variables de entorno a nivel global
+2. Executar el .exe del chromedriver
+
+Para linux, no me ha funcionado debido a que no tengo conocimientos de las varibales de entorno alla,
+pero con unas lineas de codigo se soluciona.
+
+chromedriver_path = "./chromedriver-linux64/chromedriver"
+download_directory = "/home/user/Descargas"
+
+options = webdriver.ChromeOptions()
+options.add_experimental_option(
+    'prefs', {
+        'download.default_directory': download_directory,
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "safebrowsing.enabled": True
+    })
+# Inicialización usando Service
+service = webdriver.chrome.service.Service(chromedriver_path)
+service.start()
+driver = webdriver.Chrome(service=service, options=options)
+driver.get('https://app01.cne.gob.ec/Resultados2021')
